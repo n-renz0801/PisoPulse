@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <title>Personal Expense</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/user-expenses">Users Daily Expenses</a>
+        <a href="/expenses">Your Daily Expenses</a>
+      </div>
+
+      <div>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+
+    <h1>Expense Tracker</h1>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+
+      {% for expense in expenses %}
+      <tr>
+        <td>{{ expense.date.strftime('%d/%m/%Y') }}</td>
+
+        <td
+          class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"
+        >
+          ₱{{ "%.2f"|format(expense.amount) }}
+        </td>
+
+        <td>{{ expense.description }}</td>
+
+        <td>
+          <a href="/edit/{{ expense.id }}">Edit</a>
+          <a href="/delete/{{ expense.id }}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <div style="text-align: center; margin-bottom: 20px">
+      <a href="/add_expense">
+        <button>Add Expense</button>
+      </a>
+    </div>
+  </body>
+</html>

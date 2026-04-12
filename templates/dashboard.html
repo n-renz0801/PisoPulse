@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}"
+    />
+    <title>Dashboard - PisoPulse</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/user-expenses">Users Daily Expenses</a>
+        <a href="/expenses">Your Daily Expenses</a>
+      </div>
+
+      <div>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <h1>Daily Expense Dashboard</h1>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        {% for user in users %}
+        <th>{{ user }}</th>
+        {% endfor %}
+      </tr>
+
+      {% for date in dates %}
+      <tr>
+        <td>{{ date }}</td>
+
+        {% for user in users %}
+        <td>₱{{ "%.2f"|format(data[date].get(user, 0)) }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

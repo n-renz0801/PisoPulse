@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/user_expenses.css') }}"
+    />
+    <title>Users Daily Expenses</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/user-expenses">Users Daily Expenses</a>
+        <a href="/expenses">Your Daily Expenses</a>
+      </div>
+
+      <div>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <h2>Users Daily Expenses</h2>
+
+    <!-- USER SELECTOR -->
+    <form method="GET">
+      <!-- prettier-ignore -->
+      <select name="user_id" onchange="this.form.submit()">
+            <option value="">Select User</option>
+
+            {% for user in users %}
+                <option value="{{ user.id }}"
+                    {% if selected_user_id == user.id|string %}selected{% endif %}>
+                    {{ user.username }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <hr />
+
+    <!-- TABLE -->
+    {% if data %}
+    <table border="1" style="width: 60%; margin: auto">
+      <tr>
+        <th>Date</th>
+        <th>Total</th>
+      </tr>
+
+      {% for date in dates %}
+      <tr>
+        <td>{{ date }}</td>
+        <td>₱{{ "%.2f"|format(data[date]) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <p style="text-align: center">Select a user to view data</p>
+    {% endif %}
+  </body>
+</html>
