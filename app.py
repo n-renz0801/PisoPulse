@@ -68,43 +68,37 @@ def add_expense():
     today = datetime.today().strftime('%Y-%m-%d')
     return render_template('add_expense.html', today=today)
 
+
 @app.route('/user-expenses', methods=['GET'])
 def user_expenses():
     users = User.query.all()
-
     selected_user_id = request.args.get('user_id')
 
-    expenses = []
-    data = {}
+    expenses_by_date = {}
 
     if selected_user_id:
-        expenses = Expense.query.filter_by(user_id=selected_user_id).all()
+        expenses = Expense.query.filter_by(user_id=selected_user_id).order_by(Expense.date).all()
 
         for expense in expenses:
-            date = expense.date.strftime('%Y-%m-%d')
+            date_raw = expense.date.strftime('%Y-%m-%d')
+            date_pretty = expense.date.strftime('%B %d, %Y')
 
-            if date not in data:
-                data[date] = 0
+            if date_raw not in expenses_by_date:
+                expenses_by_date[date_raw] = {
+                    "pretty": date_pretty,
+                    "items": []
+                }
 
-            data[date] += expense.amount
-
-    sorted_dates = sorted(data.keys())
-
-    formatted_dates = [
-        {
-            "raw": date,
-            "pretty": datetime.strptime(date, "%Y-%m-%d").strftime("%B %d, %Y")
-        }
-        for date in sorted_dates
-    ]
+            expenses_by_date[date_raw]["items"].append({
+                "amount": expense.amount,
+                "description": expense.description
+            })
 
     return render_template(
         'user_expenses.html',
         users=users,
-        data=data,
-        dates=formatted_dates,
-        selected_user_id=selected_user_id,
-        datetime=datetime
+        expenses_by_date=expenses_by_date,
+        selected_user_id=selected_user_id
     )
 
 

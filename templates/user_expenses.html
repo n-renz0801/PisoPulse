@@ -61,19 +61,22 @@
       <hr />
 
       <!-- TABLE -->
-      {% if data %}
+      {% if expenses_by_date %}
       <table>
         <tr>
           <th>Date</th>
-          <th>Total</th>
+          <th>Amount</th>
+          <th>Description</th>
         </tr>
 
-        {% for date in dates %}
+        {% for date, info in expenses_by_date.items() %} {% for item in
+        info["items"] %}
         <tr>
-          <td>{{ date.pretty }}</td>
-          <td>₱{{ "%.2f"|format(data[date.raw]) }}</td>
+          <td>{{ info.pretty }}</td>
+          <td>₱{{ "%.2f"|format(item.amount) }}</td>
+          <td>{{ item.description }}</td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% endfor %}
       </table>
       {% else %}
       <p style="text-align: center">Select a user to view data</p>
