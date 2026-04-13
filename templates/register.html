@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,5 +11,53 @@
       <input name="password" type="password" required />
       <button type="submit">Register</button>
     </form>
+
+    <a href="/login">Login</a>
+  </body>
+</html> -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/register.css') }}"
+    />
+    <title>Register</title>
+  </head>
+
+  <body>
+    <div class="register-box">
+      <form method="POST">
+        <h2>Register</h2>
+        <div class="input-box">
+          <span class="icon"
+            ><ion-icon name="person-circle-outline"></ion-icon
+          ></span>
+          <input name="username" type="text" required />
+          <label>Username</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+          <input name="password" type="password" required />
+          <label>Password</label>
+        </div>
+        <button type="submit">Register</button>
+        <div class="login-link">
+          <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+      </form>
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>
