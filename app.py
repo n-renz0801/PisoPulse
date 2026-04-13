@@ -86,12 +86,21 @@ def user_expenses():
 
     sorted_dates = sorted(data.keys())
 
+    formatted_dates = [
+        {
+            "raw": date,
+            "pretty": datetime.strptime(date, "%Y-%m-%d").strftime("%B %d, %Y")
+        }
+        for date in sorted_dates
+    ]
+
     return render_template(
         'user_expenses.html',
         users=users,
         data=data,
-        dates=sorted_dates,
-        selected_user_id=selected_user_id
+        dates=formatted_dates,
+        selected_user_id=selected_user_id,
+        datetime=datetime
     )
 
 
@@ -146,13 +155,21 @@ def dashboard():
     # sort dates
     sorted_dates = sorted(data.keys())
 
+    formatted_dates = [
+        {
+            "raw": date,
+            "pretty": datetime.strptime(date, "%Y-%m-%d").strftime("%B %d, %Y")
+        }
+        for date in sorted_dates
+    ]
+
     # sort users
     users = sorted(users)
 
     return render_template(
         'dashboard.html',
         data=data,
-        dates=sorted_dates,
+        dates=formatted_dates,
         users=users
     )
 

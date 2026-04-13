@@ -50,8 +50,8 @@
 
       {% for date in dates %}
       <tr>
-        <td>{{ date }}</td>
-        <td>₱{{ "%.2f"|format(data[date]) }}</td>
+        <td>{{ date.pretty }}</td>
+        <td>₱{{ "%.2f"|format(data[date.raw]) }}</td>
       </tr>
       {% endfor %}
     </table>

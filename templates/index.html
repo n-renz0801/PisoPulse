@@ -34,7 +34,7 @@
 
       {% for expense in expenses %}
       <tr>
-        <td>{{ expense.date.strftime('%d/%m/%Y') }}</td>
+        <td>{{ expense.date.strftime("%B %d, %Y") }}</td>
 
         <td
           class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"

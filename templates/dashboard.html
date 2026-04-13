@@ -33,10 +33,10 @@
 
       {% for date in dates %}
       <tr>
-        <td>{{ date }}</td>
+        <td>{{ date.pretty }}</td>
 
         {% for user in users %}
-        <td>₱{{ "%.2f"|format(data[date].get(user, 0)) }}</td>
+        <td>₱{{ "%.2f"|format(data[date.raw].get(user, 0)) }}</td>
         {% endfor %}
       </tr>
       {% endfor %}
