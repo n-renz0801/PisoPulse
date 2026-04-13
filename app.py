@@ -27,9 +27,9 @@ class Expense(db.Model):
     def __repr__(self):
         return '<Expense %r>' % self.id
     
-# @app.route('/')
-# def home():
-#     return render_template('home.html')  # landing page
+@app.route('/')
+def home():
+    return redirect('/login')
 
 @app.route('/expenses')
 def expenses():
