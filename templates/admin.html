@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') }}"
+    />
+    <title>Admin Page</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/user-expenses">Users Daily Expenses</a>
+        <a href="/expenses">Your Daily Expenses</a>
+      </div>
+
+      <div>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+    <h1>Admin Panel</h1>
+
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Action</th>
+      </tr>
+
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>
+          <form action="/admin/delete-user/{{ user.id }}" method="POST">
+            <button onclick="return confirm('Delete this user?');">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

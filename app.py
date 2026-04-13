@@ -14,7 +14,11 @@ class User(db.Model):
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
-    expenses = db.relationship('Expense', backref='user', lazy=True)
+    expenses = db.relationship(
+        'Expense',
+        backref='user',
+        lazy=True
+    )
 
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -215,6 +219,28 @@ def logout():
     session.pop('user_id', None)
     return redirect('/login')
 
+@app.route('/admin')
+def admin_panel():
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    users = User.query.all()
+    return render_template('admin.html', users=users)
+
+@app.route('/admin/delete-user/<int:id>', methods=['POST'])
+def admin_delete_user(id):
+    if 'user_id' not in session:
+        return redirect('/login')
+
+    user = User.query.get_or_404(id)
+
+    # delete all user's expenses first
+    Expense.query.filter_by(user_id=user.id).delete()
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect('/admin')
 
 if __name__ == "__main__":
     app.run(debug=True)

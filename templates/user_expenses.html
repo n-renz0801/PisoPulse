@@ -10,23 +10,43 @@
     <title>Users Daily Expenses</title>
   </head>
   <body>
-    <div class="navbar">
-      <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/user-expenses">Users Daily Expenses</a>
-        <a href="/expenses">Your Daily Expenses</a>
-      </div>
+    <header class="header">
+      <nav class="nav container">
+        <div class="nav__data">
+          <div class="nav__logo"><h1 class="website">PisoPulse</h1></div>
 
-      <div>
-        <a href="/logout">Logout</a>
-      </div>
-    </div>
-    <h2>Users Daily Expenses</h2>
+          <div class="nav__toggle" id="nav-toggle">
+            <span class="nav__burger"><ion-icon name="menu"></ion-icon></span>
+            <span class="nav__close"><ion-icon name="close"></ion-icon></span>
+          </div>
+        </div>
 
-    <!-- USER SELECTOR -->
-    <form method="GET">
-      <!-- prettier-ignore -->
-      <select name="user_id" onchange="this.form.submit()">
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li><a href="/dashboard" class="nav__link">Dashboard</a></li>
+
+            <li>
+              <a href="/user-expenses" class="nav__link">Users</a>
+            </li>
+
+            <li>
+              <a href="/expenses" class="nav__link">Your Daily Expenses</a>
+            </li>
+            <li>
+              <a href="/logout" class="nav__link">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="main">
+      <h1>Users Daily Expenses</h1>
+
+      <!-- USER SELECTOR -->
+      <form method="GET">
+        <!-- prettier-ignore -->
+        <select name="user_id" onchange="this.form.submit()">
             <option value="">Select User</option>
 
             {% for user in users %}
@@ -36,27 +56,37 @@
                 </option>
             {% endfor %}
         </select>
-    </form>
+      </form>
 
-    <hr />
+      <hr />
 
-    <!-- TABLE -->
-    {% if data %}
-    <table border="1" style="width: 60%; margin: auto">
-      <tr>
-        <th>Date</th>
-        <th>Total</th>
-      </tr>
+      <!-- TABLE -->
+      {% if data %}
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Total</th>
+        </tr>
 
-      {% for date in dates %}
-      <tr>
-        <td>{{ date.pretty }}</td>
-        <td>₱{{ "%.2f"|format(data[date.raw]) }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    {% else %}
-    <p style="text-align: center">Select a user to view data</p>
-    {% endif %}
+        {% for date in dates %}
+        <tr>
+          <td>{{ date.pretty }}</td>
+          <td>₱{{ "%.2f"|format(data[date.raw]) }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p style="text-align: center">Select a user to view data</p>
+      {% endif %}
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
   </body>
 </html>

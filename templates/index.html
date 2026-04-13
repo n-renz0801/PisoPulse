@@ -10,52 +10,82 @@
     <title>Personal Expense</title>
   </head>
   <body>
-    <div class="navbar">
-      <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/user-expenses">Users Daily Expenses</a>
-        <a href="/expenses">Your Daily Expenses</a>
-      </div>
+    <header class="header">
+      <nav class="nav container">
+        <div class="nav__data">
+          <div class="nav__logo"><h1 class="website">PisoPulse</h1></div>
+
+          <div class="nav__toggle" id="nav-toggle">
+            <span class="nav__burger"><ion-icon name="menu"></ion-icon></span>
+            <span class="nav__close"><ion-icon name="close"></ion-icon></span>
+          </div>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li><a href="/dashboard" class="nav__link">Dashboard</a></li>
+
+            <li>
+              <a href="/user-expenses" class="nav__link">Users</a>
+            </li>
+
+            <li>
+              <a href="/expenses" class="nav__link">Your Daily Expenses</a>
+            </li>
+            <li>
+              <a href="/logout" class="nav__link">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="main">
+      <h1>Your Personal Expense Tracker</h1>
 
       <div>
-        <a href="/logout">Logout</a>
+        <a href="/add_expense">
+          <button>Add Expense</button>
+        </a>
       </div>
+
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+
+        {% for expense in expenses %}
+        <tr>
+          <td>{{ expense.date.strftime("%B %d, %Y") }}</td>
+
+          <td
+            class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"
+          >
+            ₱{{ "%.2f"|format(expense.amount) }}
+          </td>
+
+          <td>{{ expense.description }}</td>
+
+          <td>
+            <a href="/edit/{{ expense.id }}">Edit</a>
+            <a href="/delete/{{ expense.id }}">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
 
-    <h1>Expense Tracker</h1>
-
-    <table>
-      <tr>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Actions</th>
-      </tr>
-
-      {% for expense in expenses %}
-      <tr>
-        <td>{{ expense.date.strftime("%B %d, %Y") }}</td>
-
-        <td
-          class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"
-        >
-          ₱{{ "%.2f"|format(expense.amount) }}
-        </td>
-
-        <td>{{ expense.description }}</td>
-
-        <td>
-          <a href="/edit/{{ expense.id }}">Edit</a>
-          <a href="/delete/{{ expense.id }}">Delete</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-
-    <div style="text-align: center; margin-bottom: 20px">
-      <a href="/add_expense">
-        <button>Add Expense</button>
-      </a>
-    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
   </body>
 </html>
