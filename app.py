@@ -6,7 +6,7 @@ from flask import session
 
 app = Flask(__name__)
 app.secret_key = 'renzqtpie'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://pisopulse_initial_user:o67hHm9MnimaUREyldU4qv1vPY4YeJ6I@dpg-d7eggj5ckfvc73fc2img-a.oregon-postgres.render.com/pisopulse_initial'
 db = SQLAlchemy(app)
 
 class User(db.Model):
