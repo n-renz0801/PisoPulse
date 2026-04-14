@@ -46,23 +46,22 @@ def expenses():
 @app.route('/add_expense', methods=['GET', 'POST'])
 def add_expense():
     if request.method == 'POST':
-        amount = float(request.form['amount'])
-        description = request.form['description']
         date_str = request.form['date']
-
-        # convert string to datetime
         date = datetime.strptime(date_str, '%Y-%m-%d')
 
-        new_expense = Expense(
-            amount=amount,
-            description=description,
-            date=date,
-            user_id=session['user_id']
-        )
+        amounts = request.form.getlist('amount[]')
+        descriptions = request.form.getlist('description[]')
 
-        db.session.add(new_expense)
+        for amount, description in zip(amounts, descriptions):
+            new_expense = Expense(
+                amount=float(amount),
+                description=description,
+                date=date,
+                user_id=session['user_id']
+            )
+            db.session.add(new_expense)
+
         db.session.commit()
-
         return redirect('/expenses')
 
     today = datetime.today().strftime('%Y-%m-%d')

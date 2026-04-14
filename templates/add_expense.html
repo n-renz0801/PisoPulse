@@ -10,23 +10,64 @@
     <title>Add Expense</title>
   </head>
   <body>
-    <h2 style="text-align: center">Add Expense</h2>
+    <div class="container">
+      <h2>Add Expense</h2>
 
-    <form method="POST">
-      <!-- Date (default today) -->
-      <label>Date:</label>
-      <input type="date" name="date" value="{{ today }}" required />
+      <form method="POST">
+        <!-- Date -->
+        <div class="date-box">
+          <span class="icon"><ion-icon name="calendar-clear"></ion-icon></span>
+          <input name="date" type="date" value="{{ today }}" required />
+          <label>Date:</label>
+        </div>
 
-      <!-- Amount -->
-      <label>Amount:</label>
-      <input type="number" step="0.01" name="amount" required />
+        <!-- <label>Date:</label>
+        <input type="date" name="date" value="{{ today }}" required /> -->
+        <div class="container2">
+          <div id="expenses-container">
+            <div class="expense_item">
+              <div class="item">
+                <label>Amount:</label>
+                <input type="number" name="amount[]" required />
+              </div>
 
-      <!-- Description -->
-      <label>Description:</label>
-      <textarea name="description" required></textarea>
+              <div class="item">
+                <label>Description:</label>
+                <textarea name="description[]" required></textarea>
+              </div>
 
-      <button type="submit">Save</button>
-    </form>
-    <a href="/expenses">Cancel</a>
+              <button
+                class="remove_button"
+                type="button"
+                onclick="this.closest('.expense_item').remove()"
+              >
+                <ion-icon name="remove"></ion-icon> Remove
+              </button>
+            </div>
+          </div>
+
+          <button class="add_button" type="button" onclick="addExpense()">
+            <ion-icon name="add"></ion-icon> Add
+          </button>
+        </div>
+
+        <div class="outside_button">
+          <button class="submit_button" type="submit">Save All</button>
+          <a class="cancel_button" href="/expenses">Cancel</a>
+        </div>
+
+        <!-- <a href="/expenses">Cancel</a> -->
+      </form>
+    </div>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="{{ url_for('static', filename='js/add_expense.js') }}"></script>
   </body>
 </html>

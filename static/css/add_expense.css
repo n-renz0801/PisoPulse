@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: Arial;
   background: #f4f6f8;
   padding: 20px;
@@ -25,4 +25,237 @@ button {
   background: #2c7be5;
   color: white;
   border: none;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: white;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+}
+
+h2 {
+  font-size: 2em;
+  color: #212121;
+  text-align: center;
+}
+
+.date-box {
+  position: relative;
+  width: 100%;
+  margin: 30px 0;
+  border-bottom: 2px solid #ffffff;
+}
+
+.date-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #212121;
+  pointer-events: none;
+  transition: 0.15s;
+}
+
+.date-box input:focus ~ label,
+.date-box input:valid ~ label {
+  top: -15px;
+}
+
+.date-box input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: 1.5px solid #212121;
+  border-radius: 10px;
+  font-size: 1em;
+  color: #212121;
+  padding: 10px 30px 10px 10px;
+}
+
+.date-box .icon {
+  position: absolute;
+  right: 8px;
+  color: #212121;
+  font-size: 1.2em;
+  line-height: 57px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0; /* hide default icon */
+  position: absolute;
+  right: 10px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.expense_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  position: relative;
+  width: 310px;
+  margin: 15px 0;
+  /* border-bottom: 2px solid #ffffff; */
+}
+
+.item label {
+  position: absolute;
+  top: -15px;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #212121;
+  pointer-events: none;
+  transition: 0.15s;
+}
+
+.item input {
+  width: 100%;
+  height: 50px;
+  background: solid white;
+  border: 1px solid #212121;
+  border-radius: 10px;
+  font-size: 1em;
+  color: #212121;
+  padding: 10px 30px 10px 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.item .icon {
+  position: absolute;
+  right: 8px;
+  color: #212121;
+  font-size: 1.2em;
+  line-height: 57px;
+}
+
+textarea {
+  width: 100%;
+  height: 50px;
+  background: solid white;
+  border: 1px solid #212121;
+  border-radius: 10px;
+  font-size: 1em;
+  color: #212121;
+  padding: 10px 30px 10px 10px;
+  resize: none;
+}
+
+textarea {
+  overflow-y: scroll; /* or auto */
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.add_button,
+.remove_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  width: 150px;
+  height: 35px;
+  background: #212121;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.container2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.remove_button {
+  display: flex;
+  position: relative;
+  top: -10px;
+}
+
+#expenses-container {
+  max-height: 50vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  display: block;
+}
+
+.expense_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eeeeee;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 18px 10px 0px 10px; /* padding: top right bottom left; */
+  margin-bottom: 10px;
+}
+
+.outside_button {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 5px;
+}
+
+.submit_button,
+.cancel_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 45px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.submit_button {
+  background-color: #425e6a;
+}
+
+.cancel_button {
+  background-color: #212121;
 }
