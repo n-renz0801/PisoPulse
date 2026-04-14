@@ -46,18 +46,44 @@ body {
 
 .container {
   background-color: #ffffff;
+  border: 1.5px solid #212121;
+  border-radius: 15px;
+  height: 75vh;
+  width: 50vh;
   padding: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
+.inside_container {
+  width: 80%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+.top_section {
+  flex-shrink: 0;
+}
 h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   font-size: 2em;
   color: #212121;
   text-align: center;
+  height: 80px;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 .date-box {
   position: relative;
   width: 100%;
+  top: 10px;
   margin: 30px 0;
   border-bottom: 2px solid #ffffff;
 }
@@ -180,9 +206,9 @@ textarea::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   column-gap: 10px;
-  width: 150px;
+  width: 100px;
   height: 35px;
-  background: #212121;
+  background: #244c3c;
   border: none;
   outline: none;
   border-radius: 8px;
@@ -200,13 +226,20 @@ textarea::-webkit-scrollbar {
 }
 
 .remove_button {
-  display: flex;
   position: relative;
   top: -10px;
 }
 
+.add_button {
+  display: flex;
+  position: relative;
+  top: -12px;
+  justify-content: center;
+}
+
 #expenses-container {
-  max-height: 50vh;
+  flex: 1;
+  max-height: 30vh;
   overflow-y: auto;
   scrollbar-width: none;
   scroll-behavior: smooth;
@@ -226,10 +259,10 @@ textarea::-webkit-scrollbar {
 }
 
 .outside_button {
-  margin-top: 30px;
+  margin-top: auto;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   width: 100%;
   row-gap: 5px;
