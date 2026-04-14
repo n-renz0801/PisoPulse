@@ -18,7 +18,7 @@ function addExpense() {
     <div class="misc_item">
       <button class="remove_button" type="button"
         onclick="this.closest('.expense_item').remove()">
-        <ion-icon name="remove"></ion-icon> Remove
+        <ion-icon name="remove"></ion-icon> Delete
       </button>
     </div>
   `;

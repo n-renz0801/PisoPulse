@@ -41,33 +41,54 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: white;
+  margin: 0;
 }
 
 .container {
-  background-color: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  height: 95vh;
+  max-height: 700px;
+
+  background: #fff;
   border: 1.5px solid #212121;
   border-radius: 15px;
-  height: 75vh;
-  width: 50vh;
   padding: 30px;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 
 .inside_container {
-  width: 80%;
-  height: 100%;
-
+  flex: 1;
   display: flex;
   flex-direction: column;
+
+  height: 100%;
+  min-height: 0;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  row-gap: 15px;
 }
+
 .top_section {
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  /* flex-shrink: 0; */
 }
+
+.container2 {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
 h2 {
   display: flex;
   align-items: center;
@@ -76,7 +97,7 @@ h2 {
   font-size: 2em;
   color: #212121;
   text-align: center;
-  height: 80px;
+  height: 50px;
   border-bottom: 1px solid #c0c0c0;
 }
 
@@ -139,7 +160,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .item {
   position: relative;
-  width: 310px;
+  width: 100%;
   margin: 15px 0;
   /* border-bottom: 2px solid #ffffff; */
 }
@@ -218,13 +239,6 @@ textarea::-webkit-scrollbar {
   font-weight: 500;
 }
 
-.container2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
 .remove_button {
   position: relative;
   top: -10px;
@@ -239,7 +253,8 @@ textarea::-webkit-scrollbar {
 
 #expenses-container {
   flex: 1;
-  max-height: 30vh;
+  min-height: 0;
+  max-height: 38vh;
   overflow-y: auto;
   scrollbar-width: none;
   scroll-behavior: smooth;
@@ -259,6 +274,7 @@ textarea::-webkit-scrollbar {
 }
 
 .outside_button {
+  flex: 0 0 auto;
   margin-top: auto;
   display: flex;
   justify-content: center;
