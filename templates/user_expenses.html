@@ -40,13 +40,25 @@
       </nav>
     </header>
 
-    <div class="main">
-      <h1>Users Daily Expenses</h1>
+    <div class="container2">
+      <!-- <h1>Your Daily Expenses</h1> -->
+      <main class="table" id="customers_table">
+        <section class="table__header">
+          <button onclick="changeDate(-1)">
+            <ion-icon class="date_icon" name="arrow-back"></ion-icon>
+          </button>
+          <h2 id="current-date" data-date="{{ selected_date_raw }}">
+            {{ selected_date_pretty }}
+          </h2>
+          <button onclick="changeDate(1)">
+            <ion-icon class="date_icon" name="arrow-forward"></ion-icon>
+          </button>
+        </section>
 
-      <!-- USER SELECTOR -->
-      <form method="GET">
-        <!-- prettier-ignore -->
-        <select name="user_id" onchange="this.form.submit()">
+        <div class="add_expense">
+          <form method="GET">
+            <!-- prettier-ignore -->
+            <select class="add_expense_btn" name="user_id" onchange="this.form.submit()">
             <option value="">Select User</option>
 
             {% for user in users %}
@@ -55,33 +67,41 @@
                     {{ user.username }}
                 </option>
             {% endfor %}
-        </select>
-      </form>
+            </select>
+          </form>
+        </div>
 
-      <hr />
-
-      <!-- TABLE -->
-      {% if expenses_by_date %}
-      <table>
-        <tr>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Description</th>
-        </tr>
-
-        {% for date, info in expenses_by_date.items() %} {% for item in
-        info["items"] %}
-        <tr>
-          <td>{{ info.pretty }}</td>
-          <td>₱{{ "%.2f"|format(item.amount) }}</td>
-          <td>{{ item.description }}</td>
-        </tr>
-        {% endfor %} {% endfor %}
-      </table>
-      {% else %}
-      <p style="text-align: center">Select a user to view data</p>
-      {% endif %}
+        <section class="table__body">
+          <table>
+            <colgroup>
+              <col style="width: 30%" />
+              <col style="width: 70%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Amount <span class="icon-arrow">&UpArrow;</span></th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if expenses %} {% for item in expenses %}
+              <tr>
+                <td>₱{{ "%.2f"|format(item.amount) }}</td>
+                <td>{{ item.description }}</td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="2" style="text-align: center">
+                  No expenses found
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
+
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
@@ -91,5 +111,25 @@
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
     <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script>
+      function changeDate(offset) {
+        const dateEl = document.getElementById("current-date");
+        let currentDate = new Date(dateEl.dataset.date);
+
+        currentDate.setDate(currentDate.getDate() + offset);
+
+        const newDate = currentDate.toISOString().split("T")[0];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("user_id");
+
+        let url = `/user-expenses?date=${newDate}`;
+        if (userId) {
+          url += `&user_id=${userId}`;
+        }
+
+        window.location.href = url;
+      }
+    </script>
   </body>
 </html>

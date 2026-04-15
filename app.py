@@ -40,8 +40,25 @@ def expenses():
     if 'user_id' not in session:
         return redirect('/login')
 
-    expenses = Expense.query.filter_by(user_id=session['user_id']).order_by(Expense.date).all()
-    return render_template('index.html', expenses=expenses)
+    selected_date_str = request.args.get('date')
+
+    if selected_date_str:
+        selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d')
+    else:
+        selected_date = datetime.today()
+
+    expenses = Expense.query.filter_by(
+        user_id=session['user_id']
+    ).filter(
+        db.func.date(Expense.date) == selected_date.date()
+    ).all()
+
+    return render_template(
+        'index.html',
+        expenses=expenses,
+        selected_date_raw=selected_date.strftime('%Y-%m-%d'),   # for JS
+        selected_date_pretty=selected_date.strftime('%b %d, %Y') # for display
+    )
 
 @app.route('/add_expense', methods=['GET', 'POST'])
 def add_expense():
@@ -73,31 +90,29 @@ def user_expenses():
     users = User.query.all()
     selected_user_id = request.args.get('user_id')
 
-    expenses_by_date = {}
+    selected_date_str = request.args.get('date')
+
+    if selected_date_str:
+        selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d')
+    else:
+        selected_date = datetime.today()
+
+    expenses = []
 
     if selected_user_id:
-        expenses = Expense.query.filter_by(user_id=selected_user_id).order_by(Expense.date).all()
-
-        for expense in expenses:
-            date_raw = expense.date.strftime('%Y-%m-%d')
-            date_pretty = expense.date.strftime('%B %d, %Y')
-
-            if date_raw not in expenses_by_date:
-                expenses_by_date[date_raw] = {
-                    "pretty": date_pretty,
-                    "items": []
-                }
-
-            expenses_by_date[date_raw]["items"].append({
-                "amount": expense.amount,
-                "description": expense.description
-            })
+        expenses = Expense.query.filter_by(
+            user_id=selected_user_id
+        ).filter(
+            db.func.date(Expense.date) == selected_date.date()
+        ).all()
 
     return render_template(
         'user_expenses.html',
         users=users,
-        expenses_by_date=expenses_by_date,
-        selected_user_id=selected_user_id
+        expenses=expenses,
+        selected_user_id=selected_user_id,
+        selected_date_raw=selected_date.strftime('%Y-%m-%d'),
+        selected_date_pretty=selected_date.strftime('%b %d, %Y')
     )
 
 

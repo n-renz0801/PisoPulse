@@ -40,42 +40,64 @@
       </nav>
     </header>
 
-    <div class="main">
-      <h1>Your Personal Expense Tracker</h1>
+    <div class="container2">
+      <!-- <h1>Your Daily Expenses</h1> -->
+      <main class="table" id="customers_table">
+        <section class="table__header">
+          <button onclick="changeDate(-1)">
+            <ion-icon class="date_icon" name="arrow-back"></ion-icon>
+          </button>
+          <h2 id="current-date" data-date="{{ selected_date_raw }}">
+            {{ selected_date_pretty }}
+          </h2>
+          <button onclick="changeDate(1)">
+            <ion-icon class="date_icon" name="arrow-forward"></ion-icon>
+          </button>
+        </section>
 
-      <div>
-        <a href="/add_expense">
-          <button>Add Expense</button>
-        </a>
-      </div>
+        <div class="add_expense">
+          <a href="/add_expense">
+            <button class="add_expense_btn">Add Expense</button>
+          </a>
+        </div>
 
-      <table>
-        <tr>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-
-        {% for expense in expenses %}
-        <tr>
-          <td>{{ expense.date.strftime("%B %d, %Y") }}</td>
-
-          <td
-            class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"
-          >
-            ₱{{ "%.2f"|format(expense.amount) }}
-          </td>
-
-          <td>{{ expense.description }}</td>
-
-          <td>
-            <a href="/edit/{{ expense.id }}">Edit</a>
-            <a href="/delete/{{ expense.id }}">Delete</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
+        <section class="table__body">
+          <table>
+            <colgroup>
+              <col style="width: 30%" />
+              <col style="width: 60%" />
+              <col style="width: 10%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Amount <span class="icon-arrow">&UpArrow;</span></th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for expense in expenses %}
+              <tr>
+                <td
+                  class="{% if expense.amount < 0 %}negative{% else %}positive{% endif %}"
+                >
+                  ₱{{ "%.2f"|format(expense.amount) }}
+                </td>
+                <td>{{ expense.description }}</td>
+                <td class="action-buttons">
+                  <a href="/edit/{{ expense.id }}" class="btn edit-btn"
+                    ><ion-icon name="create"></ion-icon
+                  ></a>
+                  <a href="/delete/{{ expense.id }}" class="btn delete-btn"
+                    ><ion-icon name="trash"></ion-icon
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </section>
+      </main>
     </div>
 
     <script
@@ -86,6 +108,6 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>
