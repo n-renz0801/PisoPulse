@@ -178,7 +178,7 @@ def dashboard():
     formatted_dates = [
         {
             "raw": date,
-            "pretty": datetime.strptime(date, "%Y-%m-%d").strftime("%B %d, %Y")
+            "pretty": datetime.strptime(date, "%Y-%m-%d").strftime("%b %d").lstrip("0").replace(" 0", " ")
         }
         for date in sorted_dates
     ]
