@@ -62,6 +62,8 @@ def expenses():
 
 @app.route('/add_expense', methods=['GET', 'POST'])
 def add_expense():
+    selected_date_str = request.args.get('date')
+
     if request.method == 'POST':
         date_str = request.form['date']
         date = datetime.strptime(date_str, '%Y-%m-%d')
@@ -79,10 +81,16 @@ def add_expense():
             db.session.add(new_expense)
 
         db.session.commit()
-        return redirect('/expenses')
 
-    today = datetime.today().strftime('%Y-%m-%d')
-    return render_template('add_expense.html', today=today)
+        return redirect('/expenses?date=' + date.strftime('%Y-%m-%d'))
+
+    if selected_date_str:
+        selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d')
+        default_date = selected_date.strftime('%Y-%m-%d')
+    else:
+        default_date = datetime.today().strftime('%Y-%m-%d')
+
+    return render_template('add_expense.html', today=default_date)
 
 
 @app.route('/user-expenses', methods=['GET'])
@@ -126,7 +134,7 @@ def edit_expense(id):
         expense.date = datetime.strptime(request.form['date'], '%Y-%m-%d')
 
         db.session.commit()
-        return redirect('/expenses')
+        return redirect('/expenses?date=' + expense.date.strftime('%Y-%m-%d'))
 
     return render_template('edit.html', expense=expense)
 
@@ -138,7 +146,7 @@ def delete_expense(id):
     db.session.delete(expense)
     db.session.commit()
 
-    return redirect('/expenses')
+    return redirect('/expenses?date=' + expense.date.strftime('%Y-%m-%d'))
 
 
 @app.route('/dashboard')
